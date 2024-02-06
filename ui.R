@@ -1,12 +1,11 @@
 header  <- dashboardHeader(
-  title = "ToDo App"
+  title = "Plot Meta-Config"
 )
 sidebar <- dashboardSidebar(
   disable = TRUE
 )
 body    <- dashboardBody(
-  Todo.View("todo"),
-  Custom.Style()
+  Plot.View("Design")
 )
 
 dashboardPage(
