@@ -26,7 +26,9 @@ Plot.Controller <- \(id, data) {
         ylim = y.range,
         asp = 1,
         axes = FALSE,
-        frame.plot = TRUE)
+        frame.plot = TRUE,
+        xaxs = "i",
+        yaxs = "i")
 
         polygon(c(0,x.max,x.max,0,0), c(0,0,y.max,y.max,0))
 
