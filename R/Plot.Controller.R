@@ -3,36 +3,42 @@ Plot.Controller <- \(id, data) {
     id,
     \(input, output, session) {
       # Settings
-      x.min   <- 0
-      x.max   <- 4000
-      x.range <- c(x.min, x.max)
+      x.min <- reactive({ input[['x.min']] })
+      x.max <- reactive({ input[['x.max']]})
 
-      y.min <- 0
-      y.max <- 2700
-      y.range <- c(y.min, y.max)
+      y.min <- reactive({ input[['y.min']] })
+      y.max <- reactive({ input[['y.max']]})
 
-      margins <- c(0, 0, 0, 0)
+      margin.bottom <- reactive({ input[['margin.bottom']] })
+      margin.left   <- reactive({ input[['margin.left']] })
+      margin.top    <- reactive({ input[['margin.top']] })
+      margin.right  <- reactive({ input[['margin.right']] })
 
       # Output Bindings
       output[["Visualizer"]]  <- renderPlot({
+        x.range <- c(x.min(), x.max())
+        y.range <- c(y.min(), y.max())
 
-      par(mar = margins)
+        margins <- c(margin.bottom(), margin.left(), margin.top(), margin.right())
 
-      plot(
-        0:1,
-        0:1,
-        type = "n",
-        xlim = x.range,
-        ylim = y.range,
-        asp = 1,
-        axes = FALSE,
-        frame.plot = TRUE,
-        xaxs = "i",
-        yaxs = "i")
+        par(mar = margins)
 
-        polygon(c(0,x.max,x.max,0,0), c(0,0,y.max,y.max,0))
+        plot(
+          0:1,
+          0:1,
+          type = "n",
+          xlim = x.range,
+          ylim = y.range,
+          asp = 1,
+          axes = FALSE,
+          frame.plot = TRUE,
+          xaxs = "i",
+          yaxs = "i")
 
-        polygon(c(500, 2000, 2000, 500), c(500, 500, 2000, 2000))
+          polygon(c(0, x.max(), x.max(), 0, 0), c(0, 0, y.max(), y.max(), 0), border = 'red')
+
+          # Perfect Square
+          polygon(c(500, 1500, 1500, 500), c(500, 500, 1500, 1500), col = 'blue')
       })
     }
   )
