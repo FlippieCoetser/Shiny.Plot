@@ -4,15 +4,15 @@ Plot.Controller <- \(id, data) {
     \(input, output, session) {
       # Settings
       x.min <- reactive({ input[['x.min']] })
-      x.max <- reactive({ input[['x.max']]})
+      x.max <- reactive({ input[['x.max']] })
 
       y.min <- reactive({ input[['y.min']] })
-      y.max <- reactive({ input[['y.max']]})
+      y.max <- reactive({ input[['y.max']] })
 
       margin.bottom <- reactive({ input[['margin.bottom']] })
-      margin.left   <- reactive({ input[['margin.left']] })
-      margin.top    <- reactive({ input[['margin.top']] })
-      margin.right  <- reactive({ input[['margin.right']] })
+      margin.left   <- reactive({ input[['margin.left']]   })
+      margin.top    <- reactive({ input[['margin.top']]    })
+      margin.right  <- reactive({ input[['margin.right']]  })
 
       # Output Bindings
       output[["Visualizer"]]  <- renderPlot({
@@ -35,10 +35,17 @@ Plot.Controller <- \(id, data) {
           xaxs = "i",
           yaxs = "i")
 
-          polygon(c(0, x.max(), x.max(), 0, 0), c(0, 0, y.max(), y.max(), 0), border = 'red')
+          frame <- data.frame(
+            x = c(0, x.max(), x.max(), 0, 0),
+            y = c(0, 0, y.max(), y.max(), 0)
+          )
+          frame |> polygon(border = 'red')
 
-          # Perfect Square
-          polygon(c(500, 1500, 1500, 500), c(500, 500, 1500, 1500), col = 'blue')
+          square <- data.frame(
+            x = c(500, 1500, 1500, 500),
+            y = c(500, 500, 1500, 1500)
+          )
+          square |> polygon(square, col = 'blue')
       })
     }
   )
